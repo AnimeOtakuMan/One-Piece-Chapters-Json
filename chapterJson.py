@@ -24,11 +24,23 @@ soup = BeautifulSoup(str(chapter_list_element[0]), "html.parser")
 
 chapters_rows_element = soup.find_all("div", {"class":"row"})
 
+with open('chapter_json.json') as json_file:
+    chapters_dict_list = json.load(json_file)
+
+most_recent_chapter_local = chapters_dict_list[0]['chapter_number']
+
 chapters = []
+for chapter_dict in chapters_dict_list:
+    chapter = Chapter(chapter_dict['chapter_number'], chapter_dict['chapter_url'])
+    chapter.set_image_urls(chapter_dict['image_urls'])
+    chapters.append(chapter)
 
 for chapter_item in chapters_rows_element:
     soup = BeautifulSoup(str(chapter_item), "html.parser")
-    chapter = Chapter(soup.find_all("a")[0].string, soup.find_all("a")[0].get("href"))
+    chapter_number = soup.find_all("a")[0].string
+    if (chapter_number == most_recent_chapter_local):
+        break
+    chapter = Chapter(chapter_number, soup.find_all("a")[0].get("href"))
 
     page = urlopen(chapter.chapter_url)
     html = page.read().decode("utf-8")
@@ -38,11 +50,11 @@ for chapter_item in chapters_rows_element:
 
     chapter_image_urls = chapter_images_element.string.split(",")
     chapter.set_image_urls(chapter_image_urls)
-    chapters.append(chapter)
+    chapters.insert(0, chapter)
 
 chapter_list_json = json.dumps([chapter.__dict__ for chapter in chapters])
 
-f = open("chapter_json.txt", "w")
+f = open("chapter_json.json", "w")
 f.write(chapter_list_json)
 f.close()
 end = time.time()
