@@ -8,7 +8,7 @@ import json
 
 start = time.time()
 
-url = "http://mangafox.icu/manga/one-piece"
+url = "https://onepiecechapters.com/"
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}
 
@@ -18,11 +18,11 @@ html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
 
-chapter_list_element = soup.find_all("div", {"class":"chapter-list"})
+chapter_list_element = soup.find_all("table", {"class":"chap-tab"})
 
 soup = BeautifulSoup(str(chapter_list_element[0]), "html.parser")
 
-chapters_rows_element = soup.find_all("div", {"class":"row"})
+chapters_rows_element = soup.find_all("tr")
 
 with open('chapter_json.json') as json_file:
     chapters_dict_list = json.load(json_file)
@@ -46,9 +46,13 @@ for chapter_item in chapters_rows_element:
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
     chapter_images = []
-    chapter_images_element = soup.find_all("p", {"id":"arraydata"})[0].string
+    chapter_images_elements = soup.find_all("div", {"class":"img_container"})
 
-    chapter_image_urls = chapter_images_element.string.split(",")
+    chapter_image_urls = []
+    for chapter_image_elems in chapter_images_elements:
+        soup = BeautifulSoup(str(chapter_image_elems), "html.parser")
+        chapter_image_url = soup.find_all("img")[0].get("src")
+        chapter_image_urls.append(chapter_image_url)
     chapter.set_image_urls(chapter_image_urls)
     chapters.insert(0, chapter)
 
