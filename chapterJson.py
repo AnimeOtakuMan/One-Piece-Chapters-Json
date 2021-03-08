@@ -23,7 +23,7 @@ html = page.read().decode("utf-8")
 
 soup = BeautifulSoup(html, "html.parser")
 
-chapter_list_element = soup.find_all("table", {"class":"chap-tab"})
+chapter_list_element = soup.find_all("div", {"class":"chapter_coin"})
 
 soup = BeautifulSoup(str(chapter_list_element[0]), "html.parser")
 
