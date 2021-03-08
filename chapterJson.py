@@ -64,9 +64,10 @@ for chapter_item in chapters_rows_element:
 
 chapter_list_json = json.dumps([chapter.__dict__ for chapter in chapters])
 
-f = open("chapter_json.json", "w")
-f.write(chapter_list_json)
-f.close()
+# f = open("chapter_json.json", "w")
+# f.write(chapter_list_json)
+# f.close()
+print(chapter_list_json)
 end = time.time()
 print("Time Elapsed")
 # Takes like 53 minutes
