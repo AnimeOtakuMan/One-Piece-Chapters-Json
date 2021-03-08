@@ -62,12 +62,12 @@ for chapter_item in chapters_rows_element:
     chapter.set_image_urls(chapter_image_urls)
     chapters.insert(0, chapter)
 
+print(chapter)
 chapter_list_json = json.dumps([chapter.__dict__ for chapter in chapters], indent=4)
 
 # f = open("chapter_json.json", "w")
 # f.write(chapter_list_json)
 # f.close()
-print(chapter_list_json)
 end = time.time()
 print("Time Elapsed")
 # Takes like 53 minutes
