@@ -64,7 +64,7 @@ for chapter_item in chapters_rows_element:
     chapters.insert(0, chapter)
     new_chapters.insert(0, chapter)
 
-print(new_chapters.__dict__)
+print(new_chapters)
 chapter_list_json = json.dumps([chapter.__dict__ for chapter in chapters], indent=4)
 
 # f = open("chapter_json.json", "w")
