@@ -35,7 +35,6 @@ with open('chapter_json.json') as json_file:
 most_recent_chapter_local = chapters_dict_list[0]['chapter_number']
 
 chapters = []
-new_chapters = []
 for chapter_dict in chapters_dict_list:
     chapter = Chapter(chapter_dict['chapter_number'], chapter_dict['chapter_url'])
     chapter.set_image_urls(chapter_dict['image_urls'])
@@ -62,14 +61,12 @@ for chapter_item in chapters_rows_element:
         chapter_image_urls.append(chapter_image_url)
     chapter.set_image_urls(chapter_image_urls)
     chapters.insert(0, chapter)
-    new_chapters.insert(0, chapter)
 
-print(json.dumps([new_chapter.__dict__ for new_chapter in new_chapters], indent=4))
 chapter_list_json = json.dumps([chapter.__dict__ for chapter in chapters], indent=4)
 
-# f = open("chapter_json.json", "w")
-# f.write(chapter_list_json)
-# f.close()
+f = open("chapter_json.json", "w")
+f.write(chapter_list_json)
+f.close()
 end = time.time()
 print("Time Elapsed")
 # Takes like 53 minutes
