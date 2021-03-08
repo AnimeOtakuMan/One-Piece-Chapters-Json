@@ -47,7 +47,8 @@ for chapter_item in chapters_rows_element:
         break
     chapter = Chapter(chapter_number, soup.find_all("a")[0].get("href"))
 
-    page = urlopen(chapter.chapter_url)
+    req = Request(chapter.chapter_url, headers=hdr)
+    page = urlopen(req)
     html = page.read().decode("utf-8")
     soup = BeautifulSoup(html, "html.parser")
     chapter_images = []
